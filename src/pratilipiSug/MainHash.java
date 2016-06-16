@@ -8,17 +8,17 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class MainHash {
-
-	private HashMap<String,ArrayList<String>> consonantMap = null;
-	private HashMap<String,String> vowelMap = null;
-	private HashMap<String,String> vowelMatra = null;
-	private HashMap<String,String> numberMap = null;
-	private String halant = "";
-	private HashMap<String,String> halfsMap = null;
-	private String skip = "skip";
+    
+	private HashMap<String,ArrayList<String>> consonantMap = null;    //map from english to hindi consonants
+	private HashMap<String,String> vowelMap = null;  //map from english to hindi vowels
+	private HashMap<String,String> vowelMatra = null; //map from english vowel to hindi matras
+	private HashMap<String,String> numberMap = null; //map from english number to hindi numbers
+	private String halant = "";  //to make aadha hindi consonant 
+	
 	
 	
 	public MainHash(){
+		//initializing all variables/structures 
 		this.consonantMap = new HashMap<String,ArrayList<String>>();
 		this.vowelMap = new HashMap<String,String>();
 		this.vowelMatra = new HashMap<String,String>();
@@ -76,36 +76,38 @@ public class MainHash {
 		
 		
 	}
-	
+	//recursive program to find all possible hindi variation possible from english string
 	public ArrayList<String> allPossible(String word,boolean afterConsonant,boolean start){
 		
 		if(word.length()<1){
-			//System.out.println("I am zero");
+			
 			return new ArrayList<String>();
 			
 		}
 		ArrayList<String> finalReturnStr = new ArrayList<String>();
-		
+		//maximum length of a hindi char in english is 3 i.e ksh so we need to check maximum for length 3 in it 
 		int check = 3;
+		//if length of string is less than 3 then we will not check for next 3 chars
 		if(word.length()<3){
 			check = word.length();
 		}
 		for(int i=1;i<=check;i++){
 			ArrayList<String> operatedStr = new ArrayList<String>();
 			ArrayList<String> returnFromRec = new ArrayList<String>();			
-			String firstHalf = word.substring(0,i);
-			String secondHalf = word.substring(i,word.length());
-			boolean consonant = false;
+			String firstHalf = word.substring(0,i);  //first part of string
+			String secondHalf = word.substring(i,word.length()); //second part of string
+			boolean consonant = false;  //see if the current first word is consonant or not
 			//System.out.println(firstHalf+"  "+secondHalf+"   "+operatedStr);
 			if(!this.consonantMap.containsKey(firstHalf)){
 				consonant = false;
 			}else{
 				consonant = true;
 			}
+			//make a list of all probables with first string
 			ArrayList<String> list = operate(firstHalf,afterConsonant,start);
 			if(list.size()>0){
-				operatedStr.addAll(operate(firstHalf,afterConsonant,start));
-				returnFromRec.addAll(allPossible(secondHalf,consonant,false)); //change 
+				operatedStr.addAll(operate(firstHalf,afterConsonant,start)); //adding values to the list which are returned my operate function
+				returnFromRec.addAll(allPossible(secondHalf,consonant,false)); //adding the values to the list which are returned by recursion 
 				afterConsonant = false;
 			}
 			if(returnFromRec.size()>=1){
@@ -132,25 +134,32 @@ public class MainHash {
 		return finalReturnStr;
 	}
 	
+	//function to return mapping to word
 	public ArrayList<String> operate(String word,boolean afterConsonant,boolean start){
 		ArrayList<String> operatedList = new ArrayList<String>();
+		//if it is a vowel
 		if(this.vowelMap.containsKey(word)){
+			//vowel at word starting get normal char printed while those in between gets matras
 			if(!start){
 				operatedList.add(this.vowelMatra.get(word));
 			}else{
 			operatedList.add(this.vowelMap.get(word));
 			}
+			//if it "a" in the word, we assume that both with matra and without matra solution may exist
 			if(word.equals("a") && !start){
 				operatedList.add(new String(""));
 				
 			}
 			return operatedList;
-		}else
+		}
+		//if it is a consonant 
+		else
 		if(this.consonantMap.containsKey(word)){
 			ArrayList<String> list = this.consonantMap.get(word);
+			//if it is a consonant after a consonant then it must be an "aadha" consonant
 			if(afterConsonant){
 				for(String str:list){
-					String s =  str+this.halant;
+					String s =  str+this.halant; //adding halant for aadha consonant
 					//System.out.println("I am here");
 					//s = s.substring(0,s.length());
 					//System.out.println(s);
@@ -165,7 +174,9 @@ public class MainHash {
 	}
 	
 	
-	
+	//function pulls all possible values for a english word also checks in the file whether that contains the word
+	//if it is contained, that word will be flashed on the top of the list.
+	//return an Arraylist of all possible strings
 	public ArrayList<String> suggest(String word){
 		ArrayList<String> list = this.allPossible(word, false, true);
 		ArrayList<String> listR = new ArrayList();

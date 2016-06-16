@@ -9,13 +9,15 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 
-
-
+//this is the mongo helper function I made which stores a large corpus of tranliteration data in "stock_words.txt"
+//I did my earlier program with this and after your recommendation suggestion I had to change my program structure
+//though I could added to the MainHash just by adding a line there and by call this.search but I thought it would be better to use text file
+//in the prototype on the account that you have to install and operate mongo seperately to your system just for testing the application.
 public class MongoHelper {
 	private MongoClient mongoClient = null;
 	private DB database = null;
 	private String databaseName = "WORDS";
-	private String fileName = "dataset1.txt";
+	private String fileName = "stock_words.txt";
 	private String mainCollection = "stock_words";
 	private String userCollection = "user_words";
 	

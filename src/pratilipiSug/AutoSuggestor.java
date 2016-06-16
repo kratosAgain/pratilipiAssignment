@@ -156,6 +156,7 @@ class AutoSuggestor {
     }
 
     private void checkForAndShowSuggestions() {
+    	//populating dictionary everytime user enter a charachter 
         typedWord = getCurrentlyTypedWord();
         ArrayList<String> list = mainHash.suggest(typedWord);
   	  	//System.out.println(list);

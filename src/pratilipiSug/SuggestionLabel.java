@@ -95,6 +95,7 @@ class SuggestionLabel extends JLabel {
         String tmp = t + text.substring(text.lastIndexOf(typedWord)).replace(typedWord, suggestedWord);
         textField.setText(tmp + " ");
       //System.out.println("this is autouggestor  " + autoSuggestor.getCurrentlyTypedWord());
+        //store the word in given text file to store user words
         BufferedReader br = null;
         BufferedWriter bw = null;
         try{
