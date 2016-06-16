@@ -178,6 +178,9 @@ public class MainHash {
 	//if it is contained, that word will be flashed on the top of the list.
 	//return an Arraylist of all possible strings
 	public ArrayList<String> suggest(String word){
+		if(word.length()==0){
+			return null;
+		}
 		ArrayList<String> list = this.allPossible(word, false, true);
 		ArrayList<String> listR = new ArrayList();
 		for(String s:list){
@@ -203,7 +206,7 @@ public class MainHash {
 					
 					listR.remove(value);
 					listR.set(0, value);
-					System.out.println(data[1]+" suggested");
+					//System.out.println(data[1]+" suggested");
 					break;
 				}
 			}						
@@ -218,7 +221,7 @@ public class MainHash {
 		MainHash m = new MainHash();
 		
 		//System.out.println(m.consonantMap);
-		String s1 = "ayush";
+		String s1 = "";
 		ArrayList<String> list = m.suggest(s1);
 //		Collections.reverse(list);
 //		for(String s:list){
