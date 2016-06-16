@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class MainHash {
     
@@ -219,9 +220,9 @@ public class MainHash {
 	
 	public static void main(String[] args){
 		MainHash m = new MainHash();
-		
+		Scanner scan = new Scanner(System.in);
 		//System.out.println(m.consonantMap);
-		String s1 = "";
+		String s1 = scan.next();
 		ArrayList<String> list = m.suggest(s1);
 //		Collections.reverse(list);
 //		for(String s:list){
